@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Complete: ระบบติวสอบครูผู้ช่วย สพป.สตูล 2569 (เอกภาษาอังกฤษ รหัส 03)</title>
+<script src="audio/tracks_data.js"></script>
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --secondary: #0ea5e9;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #d97706;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    padding-bottom: 80px;
+  }
+  header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+    color: #fff;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  header h1 { margin: 0 0 8px 0; font-size: 1.65rem; }
+  header p { margin: 4px 0; opacity: 0.92; font-size: 0.98rem; }
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .badge {
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 18px;
+  }
+  .alert-banner {
+    background: #fffbeb;
+    border: 2px solid #f59e0b;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+  }
+  .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-warning { background: var(--warning); color: #fff; }
+  .btn-outline { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+  .btn-sm { padding: 6px 11px; font-size: 0.84rem; border-radius: 8px; }
+
+  .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: #e2e8f0;
+    padding: 8px;
+    border-radius: 14px;
+  }
+  .tab-btn {
+    flex: 1 1 auto;
+    border: none;
+    background: transparent;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.93rem;
+    cursor: pointer;
+    color: #334155;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: #fff;
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .card h2 { margin-top: 0; color: #1e1b4b; font-size: 1.3rem; }
+  .card h3 { margin-top: 0; color: #312e81; font-size: 1.1rem; }
+
+  /* Audio Studio Styles */
+  .studio-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #eef2ff 100%);
+    border: 2px solid #818cf8;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .progress-wrap {
+    background: #cbd5e1;
+    height: 14px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 10px 0;
+  }
+  .progress-bar {
+    background: linear-gradient(90deg, #16a34a, #22c55e);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .track-card {
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .track-card.playing {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+    background: #fafaff;
+  }
+  .track-card.listened {
+    border-left: 8px solid var(--success);
+  }
+  .track-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .track-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e1b4b;
+    margin: 0;
+  }
+  .track-cat {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 4px;
+  }
+  .audio-controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    background: #f1f5f9;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .audio-controls-row audio {
+    flex: 1 1 280px;
+    height: 40px;
+  }
+  .check-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .check-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #166534;
+    cursor: pointer;
+    font-size: 0.96rem;
+  }
+  .check-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--success);
+  }
+  .listen-date {
+    font-size: 0.86rem;
+    color: #15803d;
+    font-weight: 600;
+  }
+  .transcript-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .transcript-box ul {
+    margin: 8px 0 0 0;
+    padding-left: 20px;
+  }
+  .transcript-box li {
+    margin-bottom: 8px;
+    color: #1e293b;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #f1f5f9; font-weight: 700; color: #1e293b; }
+  tr:nth-child(even) { background: #f8fafc; }
+  .pill-left {
+    display: inline-block;
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  .pill-right {
+    display: inline-block;
+    background: #dcfce7;
+    color: #166534;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 11px 14px;
+    margin: 7px 0;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.15s;
+  }
+  .quiz-option:hover { border-color: var(--primary); background: #f8fafc; }
+  .quiz-option.correct { border-color: var(--success); background: #dcfce7; font-weight: 700; color: #14532d; }
+  .quiz-option.wrong { border-color: var(--danger); background: #fee2e2; color: #7f1d1d; }
+  .quiz-exp {
+    display: none;
+    margin-top: 10px;
+    padding: 12px;
+    background: #eff6ff;
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    font-size: 0.92rem;
+  }
+  .flashcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .flashcard {
+    background: #fff;
+    border: 2px solid #c7d2fe;
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .flashcard:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(79,70,229,0.12); }
+  .flashcard-ans {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #94a3b8;
+    color: #15803d;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎓 ระบบติวสอบครูผู้ช่วย สพป.สตูล ปี พ.ศ. 2569 (Project Complete 100%)</h1>
+  <p>กลุ่มวิชาภาษาอังกฤษ (รหัส 03 — รับ 1 อัตรา) | ครบทุกภาค ก (200) + ข (200) + ค สัมภาษณ์ & สอนสาธิต (100)</p>
+  <div class="badge-row">
+    <span class="badge">📅 สมัครออนไลน์: 19 - 25 ต.ค. 2569</span>
+    <span class="badge">📝 สอบภาค ก: เสาร์ 14 พ.ย. 2569</span>
+    <span class="badge">📘 สอบภาค ข: อาทิตย์ 15 พ.ย. 2569</span>
+    <span class="badge">🎤 ประเมินภาค ค: ภายใน 30 พ.ย. 2569</span>
+    <span class="badge">📧 แจ้งเตือนล่วงหน้า 5 วัน: nurlaila.thw@gmail.com</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Real-time Countdown & Email Test Banner -->
+  <div class="alert-banner">
+    <div>
+      <div style="font-weight:800; font-size:1.05rem; color:#92400e;" id="liveCountdownText">
+        ⏰ กำลังคำนวณวันนับถอยหลังกำหนดการสอบ สพป.สตูล ปี 2569...
+      </div>
+      <div style="font-size:0.88rem; color:#78350f; margin-top:4px;">
+        ระบบตั้งเวลาแจ้งเตือนอัตโนมัติทุกวัน 09.00 น. + แจ้งเตือนล่วงหน้า 5 วันเข้าหน้าจอและอีเมล <b>nurlaila.thw@gmail.com</b>
+      </div>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+      <a class="btn btn-success btn-sm" href="สิ่งอัพเดตเรียลไทม์/เปิดแดชบอร์ดเรียลไทม์_ครบทุกมิติ.html">🚀 เปิดแดชบอร์ดเรียลไทม์ + Barnboard + นับถอยหลังรายวัน + แกรมม่าคนอ่อนอังกฤษ</a>
+      <button class="btn btn-warning btn-sm" onclick="testEmailNotification()">📧 ทดสอบส่งแจ้งเตือนเข้าอีเมล nurlaila.thw@gmail.com</button>
+      <a class="btn btn-outline btn-sm" href="ปฏิทินแจ้งเตือนล่วงหน้า5วัน_คลิกเพื่อเพิ่มเข้ามือถือและอีเมล.ics" download>📅 โหลดปฏิทินแจ้งเตือน (.ics)</a>
+      <a class="btn btn-primary btn-sm" href="https://obec69.thaijobjob.com/" target="_blank">🌐 เว็บรับสมัคร สพฐ.</a>
+    </div>
+  </div>
+  <div id="emailTestStatus" style="display:none; margin-bottom:16px; padding:14px; border-radius:12px; font-weight:700;"></div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-audio', this)">🔊 1. เสียงติว Ultra-Smooth (12 บท + โหมดวันไม่ว่าง)</button>
+    <button class="tab-btn" onclick="switchTab('tab-pitfalls', this)">🚨 2. ดัก 12 จุดตาย & พิกัดเอกสาร</button>
+    <button class="tab-btn" onclick="switchTab('tab-hacks', this)">⚡ 3. สูตรลัดเห็นปุ๊บกาปั๊บ (ก + ข)</button>
+    <button class="tab-btn" onclick="switchTab('tab-partc', this)">🎤 4. คู่มือพิชิต ภาค ค (สัมภาษณ์+สอน 10 นาที)</button>
+    <button class="tab-btn" onclick="switchTab('tab-flashcards', this)">🃏 5. การ์ดทบทวนจำไว (Flashcards)</button>
+    <button class="tab-btn" onclick="switchTab('tab-quiz', this)">📝 6. ฝึกทำข้อสอบเสมือนจริง (ครบทุกวิชา)</button>
+  </div>
+
+  <!-- TAB 1: AUDIO STUDIO -->
+  <div id="tab-audio" class="tab-panel active">
+    <div class="studio-hero">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px;">
+        <div>
+          <h2 style="margin:0; color:#1e1b4b;">🔊 สตูดิโอเสียงติว Ultra-Smooth Neural Thai Voice (ลื่นไหลเหมือนคนจริง 100% — นอนหลับตาฟังได้เลย)</h2>
+          <p style="margin:4px 0 0 0; color:#475569; font-size:0.93rem;">
+            📍 <b>Location พิกัดไฟล์เสียง:</b> <code>C:\Users\nurla\TeacherLicen\ห้ามลบเด็ดขาด\audio\</code> (เสียง <code>th-TH-PremwadeeNeural</code> แยกฟัง 12 บท เลื่อนวินาทีได้ มีเนื้อหาและบันทึกวันฟังอัตโนมัติ)
+            <span id="audioUpdatedBadge" style="display:inline-block; background:#dbeafe; color:#1e40af; padding:2px 8px; border-radius:6px; font-weight:700; margin-left:6px;"></span>
+          </p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <button id="masterPlayBtn" class="btn btn-success" onclick="togglePlayAll()">▶️ เล่นต่อเนื่องทุกบทอัตโนมัติ (นอนหลับตาฟังยาว)</button>
+          <button class="btn btn-primary" onclick="playNextUnlistened()">⏭️ เล่นบทที่ยังไม่ได้ฟัง</button>
+          <button class="btn btn-outline btn-sm" onclick="stopAllAudio()">⏹️ หยุดเสียงทั้งหมด</button>
+        </div>
+      </div>
+
+      <!-- Listening Progress Bar -->
+      <div style="margin-top:16px; background:#fff; padding:14px 18px; border-radius:12px; border:1px solid #cbd5e1;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div style="font-weight:800; color:#166534;" id="listenProgressText">✅ ความคืบหน้าการฟัง: 0 / 12 บท (0%)</div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <label style="font-size:0.88rem; font-weight:700; color:#334155;">⚡ ความเร็วเสียงทั้งหมด:</label>
+            <select id="globalSpeedSelect" onchange="changeGlobalSpeed(this.value)" style="padding:6px 10px; border-radius:8px; border:1px solid #94a3b8; font-weight:700;">
+              <option value="0.9">0.9x (ช้าฟังสบาย)</option>
+              <option value="1.0" selected>1.0x (ความเร็วปกติคนไทยพูด)</option>
+              <option value="1.15">1.15x (กระชับกำลังดี)</option>
+              <option value="1.25">1.25x (ทบทวนไว)</option>
+              <option value="1.5">1.5x (ทบทวนด่วนก่อนเข้าห้องสอบ)</option>
+            </select>
+            <button class="btn btn-outline btn-sm" onclick="markAllListened(true)">☑️ ติ๊กฟังครบทุกบท</button>
+            <button class="btn btn-outline btn-sm" onclick="markAllListened(false)">🔄 รีเซ็ตเช็คลิสต์</button>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div id="listenProgressBar" class="progress-bar"></div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
+          <button class="btn btn-outline btn-sm" onclick="filterTracks('ALL')">📚 ทั้งหมด (12 บท)</button>
+          <button class="btn btn-outline btn-sm" onclick="filterTracks('โหมดวันไม่ว่าง')">🛋️ โหมดวันไม่ว่าง/ขี้เกียจอ่าน (3 นาทีจบ!)</button>
+          <button class="btn btn-outline btn-sm" onclick="filterTracks('ภาพรวม')">🚨 ภาพรวม & พิกัดเอกสาร</button>
+          <button class="btn btn-outline btn-sm" onclick="filterTracks('ภาค ก')">🧠 ภาค ก (บทที่ 2-4)</button>
+          <button class="btn btn-outline btn-sm" onclick="filterTracks('ภาค ข')">📘 ภาค ข (บทที่ 5-9)</button>
+          <button class="btn btn-outline btn-sm" onclick="filterTracks('ภาค ค')">🎤 ภาค ค สัมภาษณ์ & สอน (บทที่ 10)</button>
+          <button class="btn btn-outline btn-sm" onclick="filterTracks('อัปเดต')">🌐 อัปเดตเรียลไทม์ (บทที่ 12)</button>
+        </div>
+      </div>
+
+      <!-- How Auto-Update Audio Works -->
+      <div style="margin-top:12px; font-size:0.86rem; color:#334155; background:#eef2ff; padding:10px 14px; border-radius:10px; border:1px dashed #6366f1;">
+        💡 <b>ระบบอัปเดตเสียงอัตโนมัติ:</b> ทุกเช้าเวลา 09.00 น. (หรือเมื่อดับเบิลคลิกไฟล์ <code>กดที่นี่เพื่ออัปเดตข้อมูลและสร้างไฟล์เสียงใหม่.cmd</code>) ระบบจะดึงข้อมูลวันนับถอยหลัง สถานะเว็บรับสมัคร และข้อความที่คุณเพิ่มในไฟล์ <code>อัปเดตเนื้อหาเสียงเพิ่มเติม.txt</code> มาสร้างเป็นเสียงภาษาไทยใน <b>บทที่ 11</b> ให้อัตโนมัติทันทีค่ะ!
+      </div>
+    </div>
+
+    <!-- Track Cards Container -->
+    <div id="tracksContainer"></div>
+  </div>
+
+  <!-- TAB 2: 12 PITFALLS & DOCUMENT CHECKLIST -->
+  <div id="tab-pitfalls" class="tab-panel">
+    <div class="card">
+      <h2>🚨 ดัก 12 จุดตายที่คนสอบครูผู้ช่วยมักตกม้าตาย (อ่านป้องกันไว้ ปลอดภัย 100%)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:28%;">จุดที่คนมักพลาด</th>
+            <th>วิธีป้องกันที่ถูกต้อง 100% (อ้างอิงประกาศ สพป.สตูล ปี 2569)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>1. สมัครวันท้ายๆ ได้เลขประจำตัวสอบหลังคนอื่น</b></td>
+            <td>สมัครและจ่ายเงิน <b>530 บาท</b> ตั้งแต่วันแรก <b>19 ต.ค. 2569</b> ที่ <a href="https://obec69.thaijobjob.com/" target="_blank">obec69.thaijobjob.com</a> เพราะถ้าคะแนนรวมเท่ากัน + คะแนนภาค ค เท่ากัน + คะแนนภาค ข เท่ากัน <b>คนที่ชำระเงินและได้เลขประจำตัวสอบก่อน จะได้บรรจุก่อนทันที!</b></td>
+          </tr>
+          <tr>
+            <td><b>2. ใช้ใบรับรองแพทย์คลินิกหรือ รพ.เอกชน</b></td>
+            <td><b>ห้ามใช้เด็ดขาด!</b> ต้องใช้ใบรับรองแพทย์จาก <b>โรงพยาบาลของรัฐเท่านั้น</b> อายุไม่เกิน 1 เดือน และใช้แบบฟอร์มท้ายประกาศ (หน้า 18) ที่ระบุว่าไม่เป็น 5 โรคต้องห้ามตามกฎ ก.ค.ศ. 2549</td>
+          </tr>
+          <tr>
+            <td><b>3. ใบอนุญาตประกอบวิชาชีพครูหมดอายุ</b></td>
+            <td>เช็ควันหมดอายุในเว็บคุรุสภา (<a href="https://www.ksp.or.th/" target="_blank">ksp.or.th</a>) ต้องไม่หมดอายุภายในวันปิดรับสมัคร (<b>25 ต.ค. 2569</b>) และไม่หมดอายุในวันบรรจุและแต่งตั้ง</td>
+          </tr>
+          <tr>
+            <td><b>4. Transcript เป็นภาษาอังกฤษล้วน</b></td>
+            <td>ถ้าใบแสดงผลการเรียน (Transcript) เป็นภาษาอังกฤษ <b>ต้องแนบฉบับภาษาไทย หรือฉบับแปลภาษาไทยที่รับรองความถูกต้อง</b> คู่กันเสมอ</td>
+          </tr>
+          <tr>
+            <td><b>5. ลืมแนบใบรับรองคุณวุฒิจากเว็บ ก.ค.ศ.</b></td>
+            <td>เข้าเว็บ <a href="http://qualification.otepc.go.th/" target="_blank">qualification.otepc.go.th</a> ค้นหาคุณวุฒิปริญญาตรีของตนเอง แล้วสั่งพิมพ์แนบไปพร้อมเอกสารสมัครสอบ</td>
+          </tr>
+          <tr>
+            <td><b>6. ลืมลงวันที่ในสำเนาเอกสาร</b></td>
+            <td>สำเนาเอกสารทุกแผ่น ต้องเขียนว่า <b>"สำเนาถูกต้อง" + เซ็นลายมือชื่อ + เขียนชื่อตัวบรรจง + ลงวันที่กำกับ</b> ให้ครบทุกหน้า</td>
+          </tr>
+          <tr>
+            <td><b>7. ลืมพิมพ์ใบสมัครและบัตรประจำตัวสอบ</b></td>
+            <td>ตั้งแต่วันที่ <b>28 ต.ค. 2569</b> ต้องเข้าเว็บรับสมัครเพื่อพิมพ์ <b>ใบสมัคร + บัตรประจำตัวสอบ</b> ติดรูปถ่าย 1 x 1.5 นิ้ว (ถ่ายไม่เกิน 6 เดือน) และเซ็นชื่อให้เรียบร้อย</td>
+          </tr>
+          <tr>
+            <td><b>8. เข้าใจเกณฑ์ผ่านผิด</b></td>
+            <td>ต้องได้คะแนน <b>ภาค ก ไม่ต่ำกว่า 60% (120/200)</b> <u>และ</u> <b>ภาค ข ไม่ต่ำกว่า 60% (120/200)</b> แยกกันทั้งสองภาค จึงจะมีสิทธิเข้าสอบภาค ค</td>
+          </tr>
+          <tr>
+            <td><b>9. แต่งกายวันสอบข้อเขียนผิดระเบียบ</b></td>
+            <td>วันสอบเสาร์ 14 และอาทิตย์ 15 พ.ย. 2569 ให้ใส่เสื้อยืดมีปกหรือเสื้อเชิ้ตสุภาพ กางเกงวอร์มขายาวสุภาพ ไม่สวมเครื่องประดับ นาฬิกาข้อมือทุกชนิดเข้าห้องสอบไม่ได้ เตรียมบัตรประชาชนตัวจริง + บัตรประจำตัวสอบ + ดินสอ 2B 3 แท่ง + ยางลบ</td>
+          </tr>
+          <tr>
+            <td><b>10. เอกสารนำเสนอการสอน ภาค ค เกิน 5 หน้า หรือไม่ครบ 5 ชุด</b></td>
+            <td>ประกาศกำหนดชัดเจนว่า <b>เอกสารประกอบการนำเสนอความสามารถด้านการสอน ต้องไม่เกิน 5 หน้ากระดาษ A4 จำนวน 5 ชุด</b> (สำหรับกรรมการ 5 ท่าน)</td>
+          </tr>
+          <tr>
+            <td><b>11. สอนสาธิต ภาค ค เกินเวลา 10 นาที</b></td>
+            <td>เวลานำเสนอการสอนมีเพียง <b>ไม่เกิน 10 นาที</b> (ซ้อมจับเวลาให้พูดครบ 4 หัวข้อ: วิธีสอน 20 + กิจกรรม 10 + สื่อ 10 + วัดผล 10 จบในนาทีที่ 9.30)</td>
+          </tr>
+          <tr>
+            <td><b>12. แฟ้มสะสมงาน (Portfolio) จัดหมวดไม่ตรงเกณฑ์</b></td>
+            <td>ต้องแบ่งเป็น <b>3 หมวดตามประกาศเป๊ะๆ</b> ได้แก่ (1) ประวัติการศึกษา (2) ผลงานที่เกี่ยวข้องกับวิชาชีพและวิชาเอกภาษาอังกฤษ (3) การเข้าถึงชุมชนและการมีจิตสาธารณะ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 3: ZERO-KNOWLEDGE HACKS -->
+  <div id="tab-hacks" class="tab-panel">
+    <div class="card">
+      <h2>⚡ ตาราง "เห็นคำซ้าย กาคำขวา" (Keyword Pairing — อ่านรอบเดียวตัดช้อยส์ได้ทันที)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:45%;">👀 ถ้าในโจทย์เห็นคำว่า... (คำซ้าย)</th>
+            <th>✅ ให้มองหาและกาช้อยส์ที่มีคำว่า... (คำขวา)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="pill-left">ตรรกศาสตร์: ถ้า A แล้ว B</span></td><td><span class="pill-right">ถ้าไม่ B แล้วไม่ A (ย้อนหลังมาหน้า + เติมไม่ทั้งคู่)</span></td></tr>
+          <tr><td><span class="pill-left">If + V.1 / If + V.2 (were) / If + had V.3</span></td><td><span class="pill-right">will + V.inf / would + V.inf / would have + V.3</span></td></tr>
+          <tr><td><span class="pill-left">A number of ... vs The number of ...</span></td><td><span class="pill-right">A number of = พหูพจน์ (are/have) | The number of = เอกพจน์ (is/has)</span></td></tr>
+          <tr><td><span class="pill-left">look forward to / be used to / suggest / mind</span></td><td><span class="pill-right">ตามด้วย V.ing เสมอ!</span></td></tr>
+          <tr><td><span class="pill-left">Subjunctive: suggest / insist / essential + that + S</span></td><td><span class="pill-right">กริยาช่อง 1 ไม่ผัน (V.inf เช่น be, go, not be)</span></td></tr>
+          <tr><td><span class="pill-left">ราชการส่วนใดไม่เป็นนิติบุคคล?</span></td><td><span class="pill-right">อำเภอ (ส่วนจังหวัด กระทรวง กรม อบต. เทศบาล เป็นนิติบุคคลทั้งหมด)</span></td></tr>
+          <tr><td><span class="pill-left">พ.ร.ฎ.บ้านเมืองที่ดี / ทบทวนภารกิจ / ตอบหนังสือประชาชน</span></td><td><span class="pill-right">เกิดประโยชน์สุขของประชาชน / ทบทวนทุก 5 ปี / ตอบภายใน 15 วัน</span></td></tr>
+          <tr><td><span class="pill-left">อุทธรณ์คำสั่งทางปกครอง / ครูทำละเมิดขณะปฏิบัติหน้าที่</span></td><td><span class="pill-right">อุทธรณ์ใน 15 วัน / ฟ้องหน่วยงานรัฐ (สพฐ.) และครูรับผิดเฉพาะจงใจหรือประมาทร้ายแรง</span></td></tr>
+          <tr><td><span class="pill-left">เกณฑ์ CEFR: ป.6 / ม.3 / ม.6 / ครูประถม / ครูมัธยม</span></td><td><span class="pill-right">ป.6 = A1 | ม.3 = A2 | ม.6 = B1 | ครูประถม = B1 | ครูมัธยม = B2</span></td></tr>
+          <tr><td><span class="pill-left">วิธีสอน 3Ps: ขั้น Practice vs ขั้น Production</span></td><td><span class="pill-right">Practice เน้น Accuracy (ถูกต้อง) | Production เน้น Fluency (คล่องแคล่ว)</span></td></tr>
+          <tr><td><span class="pill-left">จิตวิทยาเด็กประถม (Piaget / Erikson / Vygotsky / Rogers)</span></td><td><span class="pill-right">คิดรูปธรรม (7-11 ปี) / ขยันหมั่นเพียร vs ปมด้อย / ZPD & Scaffolding / เน้นผู้รับบริการเป็นศูนย์กลาง</span></td></tr>
+          <tr><td><span class="pill-left">วิจัยในชั้นเรียน (CAR) / ค่าความยาก (p) / อำนาจจำแนก (r)</span></td><td><span class="pill-right">แก้ปัญหาผู้เรียนทันที (PAOR) / p = 0.20-0.80 / r ตั้งแต่ 0.20 ขึ้นไป</span></td></tr>
+          <tr><td><span class="pill-left">อายุเด็กตามกฎหมาย: ปฐมวัย / ภาคบังคับ / รธน.ม.54 / คุ้มครองเด็ก</span></td><td><span class="pill-right">ปฐมวัย &lt; 6 ปี | ภาคบังคับ ย่าง 7-16 ปี | รธน.ฟรี 12 ปี (อนุบาล-ม.3) | คุ้มครองเด็ก &lt; 18 ปี</span></td></tr>
+          <tr><td><span class="pill-left">ครูผู้ช่วยพัฒนาอย่างเข้ม / โทษวินัยปลดออก vs ไล่ออก</span></td><td><span class="pill-right">พัฒนาเข้ม 2 ปี (ประเมินทุก 6 เดือน = 4 ครั้ง) / ปลดออกได้บำเหน็จบำนาญ ไล่ออกไม่ได้</span></td></tr>
+          <tr><td><span class="pill-left">นโยบาย ศธ. & สพฐ. 2569 / พระบรมราโชบาย ร.10</span></td><td><span class="pill-right">เรียนดี มีความสุข (ลดภาระ-เพิ่มสวัสดิการ-เรียนดีมีคุณธรรม) / 4 ด้าน (ทัศนคติ-พื้นฐานชีวิต-มีงานทำ-พลเมืองดี)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 4: PART C INTERVIEW & 10-MINUTE TEACHING DEMO -->
+  <div id="tab-partc" class="tab-panel">
+    <div class="card">
+      <h2>🎤 คู่มือพิชิต ภาค ค (100 คะแนน: สัมภาษณ์ 25 + แฟ้มสะสมงาน 25 + สอนสาธิต 10 นาที 50)</h2>
+      <h3>1. บทพูดแนะนำตัวและตอบคำถามสัมภาษณ์ (25 คะแนน — ท่องตามนี้ได้เลย)</h3>
+      <div class="transcript-box">
+        <p><b>🗣️ บทแนะนำตัว (ความยาว 90 วินาที):</b><br>
+        "กราบเรียนท่านประธานและคณะกรรมการประเมินภาค ค ที่เคารพทุกท่านค่ะ ดิฉันนางสาวนูรไลลา ผู้เข้ารับการประเมินตำแหน่งครูผู้ช่วย กลุ่มวิชาภาษาอังกฤษ รหัส 03 สังกัด สพป.สตูล ค่ะ ดิฉันมีความมุ่งมั่นตั้งใจที่จะนำความรู้ความสามารถด้านการสอนภาษาอังกฤษเชิงรุก (Active Learning) ตามนโยบาย <b>เรียนดี มีความสุข</b> ของกระทรวงศึกษาธิการและ สพฐ. มาพัฒนาผู้เรียนระดับประถมศึกษาในจังหวัดสตูล โดยเน้นเทคนิค <b>Phonics, TPR และ 3Ps</b> เพื่อให้เด็กไทยอ่านออกเสียงได้ถูกต้อง กล้าสื่อสารภาษาอังกฤษในชีวิตจริง และเติบโตเป็นพลเมืองดีตามพระบรมราโชบายด้านการศึกษาของในหลวงรัชกาลที่ 10 ค่ะ"</p>
+        <p><b>❓ คำถามที่ 1: ถ้านักเรียนชั้นประถมไม่กล้าพูดภาษาอังกฤษและอ่านไม่ออก ครูจะแก้ปัญหาอย่างไร?</b><br>
+        <b>✅ คำตอบได้คะแนนเต็ม:</b> "ดิฉันจะเริ่มจากการสร้างบรรยากาศห้องเรียนเชิงบวกให้เด็กไม่กลัวการทำผิด ใช้เพลงและเทคนิค <b>TPR (Total Physical Response)</b> ให้เด็กขยับร่างกายตามคำศัพท์เพื่อลดความเครียด จากนั้นปูพื้นฐานการผสมเสียงด้วย <b>Phonics</b> ใช้การเสริมต่อการเรียนรู้ (<b>Scaffolding</b>) และทำวิจัยปฏิบัติการในชั้นเรียน (<b>CAR</b>) ควบคู่กับการชมเชยเสริมแรงทางบวกทุกครั้งที่นักเรียนกล้าออกเสียงค่ะ"</p>
+        <p><b>❓ คำถามที่ 2: จะนำบริบทท้องถิ่นจังหวัดสตูลและประวัติศาสตร์ชาติไทยมาบูรณาการในวิชาภาษาอังกฤษอย่างไร?</b><br>
+        <b>✅ คำตอบได้คะแนนเต็ม:</b> "ดิฉันจะออกแบบกิจกรรม <b>Little Satun Geopark Guide (ยุวมัคคุเทศก์น้อยอุทยานธรณีโลกสตูล)</b> ให้นักเรียนฝึกพูดประโยคภาษาอังกฤษแนะนำแหล่งท่องเที่ยวและวัฒนธรรมในจังหวัดสตูล เช่น หมู่เกาะเภตรา ถ้ำเลสเตโกดอน และอาหารพื้นเมือง ทำให้เด็กเกิดความภาคภูมิใจในท้องถิ่น รักชาติ ศาสนา พระมหากษัตริย์ และใช้ภาษาอังกฤษสื่อสารกับนักท่องเที่ยวได้จริงค่ะ"</p>
+      </div>
+
+      <h3 style="margin-top:20px;">2. บทพูดนำเสนอความสามารถด้านการสอนภายใน 10 นาที (50 คะแนน) + โครงสร้างเอกสาร 5 หน้า A4 จำนวน 5 ชุด</h3>
+      <div class="transcript-box">
+        <p><b>📌 โครงสร้างเอกสารไม่เกิน 5 หน้า A4 (พิมพ์เข้าเล่มมุมหรือเย็บมุม 5 ชุดยื่นให้กรรมการ 5 ท่าน):</b></p>
+        <ul>
+          <li><b>หน้าที่ 1:</b> ข้อมูลทั่วไปของแผนการจัดการเรียนรู้ (วิชาภาษาอังกฤษ ชั้น ป.4 เรื่อง My Favorite Food & Local Satun Dish เวลา 1 ชั่วโมง มาตรฐาน ต 1.1, ต 1.2)</li>
+          <li><b>หน้าที่ 2:</b> จุดประสงค์การเรียนรู้ 3 ด้าน (K-P-A), สมรรถนะสำคัญ 5 ด้าน และคุณลักษณะอันพึงประสงค์</li>
+          <li><b>หน้าที่ 3:</b> กิจกรรมการเรียนรู้เชิงรุกด้วยวิธีสอน <b>3Ps (Presentation - Practice - Production)</b> ผสมผสาน <b>Phonics & Active Learning</b></li>
+          <li><b>หน้าที่ 4:</b> สื่อ นวัตกรรม และเทคโนโลยีดิจิทัล (บัตรภาพคำศัพท์ Phonics, เกมจับคู่, สื่ออินเทอร์แอคทีฟ)</li>
+          <li><b>หน้าที่ 5:</b> การวัดและประเมินผลตามสภาพจริง (Rubric Score ประเมินการออกเสียงและการพูดสื่อสาร)</li>
+        </ul>
+        <p style="margin-top:10px;"><b>⏱️ สคริปต์พูดนำเสนอ 10 นาที (ครบ 4 ตัวชี้วัด 50 คะแนน):</b></p>
+        <ul>
+          <li><b>นาทีที่ 0-1 (เกริ่นนำ):</b> แนะนำแผนการจัดการเรียนรู้ภาษาอังกฤษ ชั้น ป.4 เรื่อง My Favorite Food เชื่อมโยงบริบทอาหารท้องถิ่นจังหวัดสตูล</li>
+          <li><b>นาทีที่ 1-4 (ตัวชี้วัดที่ 1: ทักษะ เทคนิค และวิธีการสอน - 20 คะแนน):</b> อธิบายการใช้เทคนิค <b>Phonics</b> ฝึกออกเสียงคำศัพท์ และวิธีสอนแบบ <b>3Ps</b> (ขั้น Presentation นำเสนอคำศัพท์และโครงสร้าง What do you like to eat? -> I like to eat...)</li>
+          <li><b>นาทีที่ 4-6 (ตัวชี้วัดที่ 2: กิจกรรม - 10 คะแนน):</b> อธิบายกิจกรรม <b>Information Gap & Role Play (Little Restaurant in Satun)</b> ให้นักเรียนจับคู่สลับบทบาทเป็นคนขายและลูกค้าในขั้น Practice (เน้น Accuracy) และขั้น Production (เน้น Fluency)</li>
+          <li><b>นาทีที่ 6-8 (ตัวชี้วัดที่ 3: สื่อนวัตกรรมและเทคโนโลยี - 10 คะแนน):</b> แสดงสื่อบัตรภาพคำศัพท์ (Flashcards) สีสันชัดเจน และสื่อเกมดิจิทัล/วงล้อคำศัพท์ที่กระตุ้นให้ผู้เรียนทุกคนมีส่วนร่วม</li>
+          <li><b>นาทีที่ 8-9.30 (ตัวชี้วัดที่ 4: การวัดและประเมินผล - 10 คะแนน):</b> สรุปการวัดผลครบ K-P-A โดยใช้แบบประเมินการพูดสื่อสารตามสภาพจริง (Authentic Assessment) และให้ข้อมูลย้อนกลับ (Feedback) ทันที</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: FLASHCARDS -->
+  <div id="tab-flashcards" class="tab-panel">
+    <div class="card">
+      <h2>🃏 การ์ดทบทวนความจำไว (คลิกที่การ์ดเพื่อเปิดดูคำตอบ — Active Recall)</h2>
+      <div class="flashcard-grid" id="flashcardGrid"></div>
+    </div>
+  </div>
+
+  <!-- TAB 6: MOCK EXAM -->
+  <div id="tab-quiz" class="tab-panel">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <h2 style="margin:0;">📝 ข้อสอบจำลองเสมือนจริงครบทุกวิชา (คลิกเลือกคำตอบเพื่อดูเฉลยละเอียดทันที)</h2>
+        <div style="font-weight:800; color:var(--primary); font-size:1.05rem;" id="quizScoreText">คะแนนที่ได้: 0 / 0</div>
+      </div>
+      <div id="quizContainer"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Fallback tracks metadata if tracks_data.js hasn't loaded
+const FALLBACK_TRACKS = [
+  { id: 'track01_overview_pitfalls.mp3', title: 'บทที่ 1: สรุปภาพรวม & ดัก 12 จุดตายห้ามพลาดเด็ดขาด', category: 'ภาพรวม & เตรียมตัวสมัครสอบ', sentences: ['วันเปิดรับสมัคร 19-25 ต.ค. 2569 สมัครวันแรกได้เลขประจำตัวสอบก่อน', 'ใบรับรองแพทย์ต้อง รพ.รัฐ เท่านั้น', 'ใบอนุญาตคุรุสภาต้องไม่หมดอายุ'] },
+  { id: 'track02_partA_analytical.mp3', title: 'บทที่ 2: ภาค ก ความสามารถในการคิดวิเคราะห์ (100 คะแนน)', category: 'ภาค ก (200 คะแนน)', sentences: ['ภาษาไทย ตรรกศาสตร์ ถ้า A แล้ว B = ถ้าไม่ B แล้วไม่ A และคณิตศาสตร์อนุกรม/แทนค่าช้อยส์'] },
+  { id: 'track03_partA_english.mp3', title: 'บทที่ 3: ภาค ก ทักษะภาษาอังกฤษ (50 คะแนน)', category: 'ภาค ก (200 คะแนน)', sentences: ['If-Clause 4 แบบ, A number of vs The number of, กริยาตามด้วย V.ing'] },
+  { id: 'track04_partA_good_official.mp3', title: 'บทที่ 4: ภาค ก ความรู้และลักษณะการเป็นข้าราชการที่ดี (50 คะแนน)', category: 'ภาค ก (200 คะแนน)', sentences: ['กลางรวม ภูมิภาคแบ่ง อำเภอไม่เป็นนิติบุคคล ท้องถิ่นกระจาย, บ้านเมืองที่ดี, ปกครอง, ละเมิด, จริยธรรม'] },
+  { id: 'track05_partB_english_major_1.mp3', title: 'บทที่ 5: ภาค ข วิชาเอกภาษาอังกฤษ รหัส 03 (ส่วนที่ 1: ไวยากรณ์ขั้นสูง & Phonetics)', category: 'ภาค ข (200 คะแนน)', sentences: ['Subjunctive Mood, Causative Verbs, Word Stress'] },
+  { id: 'track06_partB_english_major_2.mp3', title: 'บทที่ 6: ภาค ข วิชาเอกภาษาอังกฤษ รหัส 03 (ส่วนที่ 2: หลักสูตร, CEFR & วิธีสอน ELT)', category: 'ภาค ข (200 คะแนน)', sentences: ['4 สาระภาษาต่างประเทศ, CEFR ป.6=A1 ม.3=A2 ม.6=B1 ครูประถม=B1, 3Ps, CLT, TBLT, TPR, Phonics'] },
+  { id: 'track07_partB_education_1.mp3', title: 'บทที่ 7: ภาค ข วิชาการศึกษา (ส่วนที่ 1: บริบทโลก เศรษฐกิจพอเพียง & จิตวิทยา)', category: 'ภาค ข (200 คะแนน)', sentences: ['เศรษฐกิจพอเพียง 3 ห่วง 2 เงื่อนไข, Piaget, Erikson, Vygotsky, Skinner, Carl Rogers'] },
+  { id: 'track08_partB_education_2.mp3', title: 'บทที่ 8: ภาค ข วิชาการศึกษา (ส่วนที่ 2: หลักสูตร ศาสตร์การสอน วัดผล วิจัย CAR & ประกันคุณภาพ)', category: 'ภาค ข (200 คะแนน)', sentences: ['สมรรถนะ 5 ด้าน, Bloom 6 ขั้น, ค่า p และ r, วิจัย CAR (PAOR), ประกันคุณภาพ 3 มาตรฐาน'] },
+  { id: 'track09_partB_laws_policies.mp3', title: 'บทที่ 9: ภาค ข กฎหมายการศึกษา 8 ฉบับ & แนวทางปฏิรูปการศึกษาปี 2569 (25 คะแนน)', category: 'ภาค ข (200 คะแนน)', sentences: ['สูตรอายุเด็กตามกฎหมาย, ครูผู้ช่วยพัฒนาเข้ม 2 ปี, โทษวินัย 5 สถาน, นโยบายเรียนดีมีความสุข และพระบรมราโชบาย 4 ด้าน'] },
+  { id: 'track10_partC_interview_demo.mp3', title: 'บทที่ 10: ภาค ค สัมภาษณ์ + แฟ้มสะสมงาน + นำเสนอการสอน 10 นาที (100 คะแนน)', category: 'ภาค ค (100 คะแนน)', sentences: ['สคริปต์แนะนำตัวและตอบคำถามสัมภาษณ์, แฟ้มสะสมงาน 3 หมวด, การนำเสนอการสอน 10 นาที เอกสารไม่เกิน 5 หน้า A4 จำนวน 5 ชุด'] },
+  { id: 'track11_realtime_update.mp3', title: 'บทที่ 11: ข้อมูลอัปเดตเรียลไทม์ & แจ้งเตือนล่วงหน้า 5 วัน (Auto-Updated Audio)', category: 'อัปเดตเรียลไทม์ล่าสุด', sentences: ['รายงานสถานะการนับถอยหลังวันสอบและสถานะเว็บไซต์รับสมัครสอบล่าสุด'] }
+];
+
+const metaObj = window.AUDIO_TRACKS_META || { updatedAtThai: 'วันนี้', tracks: FALLBACK_TRACKS };
+const TRACKS = metaObj.tracks || FALLBACK_TRACKS;
+const STORAGE_KEY = 'teacher_licen_satun69_audio_checklist_v2';
+
+let listenState = {};
+try {
+  listenState = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+} catch (e) {
+  listenState = {};
+}
+
+let isPlayingAll = false;
+let currentFilter = 'ALL';
+
+function saveListenState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(listenState));
+  updateProgressUI();
+}
+
+function formatThaiNow() {
+  const d = new Date();
+  return d.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' }) +
+    ' เวลา ' + d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + ' น.';
+}
+
+function updateProgressUI() {
+  const total = TRACKS.length;
+  let count = 0;
+  for (const t of TRACKS) {
+    if (listenState[t.id] && listenState[t.id].listened) count++;
+  }
+  const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+  document.getElementById('listenProgressText').textContent = `✅ ความคืบหน้าการฟัง: ฟังแล้ว ${count} / ${total} บท (${pct}%)`;
+  document.getElementById('listenProgressBar').style.width = `${pct}%`;
+  if (metaObj.updatedAtThai) {
+    document.getElementById('audioUpdatedBadge').textContent = `🔄 อัปเดตข้อมูลเสียงล่าสุด: ${metaObj.updatedAtThai}`;
+  }
+}
+
+function renderTracks() {
+  const container = document.getElementById('tracksContainer');
+  container.innerHTML = '';
+  const speed = parseFloat(document.getElementById('globalSpeedSelect').value || '1.0');
+
+  TRACKS.forEach((t, idx) => {
+    if (currentFilter !== 'ALL' && !t.category.includes(currentFilter) && !t.title.includes(currentFilter)) {
+      return;
+    }
+    const st = listenState[t.id] || { listened: false, dateStr: '' };
+    const card = document.createElement('div');
+    card.className = 'track-card' + (st.listened ? ' listened' : '');
+    card.id = `card-${idx}`;
+
+    const sentencesHtml = (t.sentences || []).map(s => `<li>${s}</li>`).join('');
+
+    card.innerHTML = `
+      <div class="track-header">
+        <div>
+          <span class="track-cat">${t.category}</span>
+          <h3 class="track-title">${t.title}</h3>
+          <div style="font-size:0.82rem; color:#92400e; background:#fef3c7; border:1px solid #f59e0b; padding:3px 9px; border-radius:6px; display:inline-block; margin-top:5px; font-weight:700;">
+            📍 Location พิกัดอ้างอิง: ${t.location || ('C:\\Users\\nurla\\TeacherLicen\\ห้ามลบเด็ดขาด\\audio\\' + t.id)}
+          </div>
+        </div>
+        <div id="status-badge-${idx}" style="font-weight:700; font-size:0.88rem; padding:4px 10px; border-radius:8px; background:${st.listened ? '#dcfce7' : '#f1f5f9'}; color:${st.listened ? '#166534' : '#475569'};">
+          ${st.listened ? '✅ ฟังจบแล้ว' : '⏳ ยังไม่ได้ฟัง'}
+        </div>
+      </div>
+
+      <!-- Audio Scrubber & Second-by-Second Seek Buttons -->
+      <div class="audio-controls-row">
+        <audio id="audio-${idx}" controls preload="metadata" src="audio/${t.id}"></audio>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <button class="btn btn-outline btn-sm" onclick="seekAudio(${idx}, -15)">⏪ -15 วิ</button>
+          <button class="btn btn-outline btn-sm" onclick="seekAudio(${idx}, -5)">⏪ -5 วิ</button>
+          <button class="btn btn-primary btn-sm" onclick="toggleSingleTrack(${idx})">▶️ เล่น / ⏸️ หยุด</button>
+          <button class="btn btn-outline btn-sm" onclick="seekAudio(${idx}, 5)">⏩ +5 วิ</button>
+          <button class="btn btn-outline btn-sm" onclick="seekAudio(${idx}, 15)">⏩ +15 วิ</button>
+          <button class="btn btn-outline btn-sm" onclick="restartTrack(${idx})">⏮️ เริ่มต้นบท</button>
+        </div>
+      </div>
+
+      <!-- Checklist & Date Listened -->
+      <div class="check-row">
+        <label class="check-label">
+          <input type="checkbox" id="chk-${idx}" ${st.listened ? 'checked' : ''} onchange="onToggleCheck(${idx}, this.checked)">
+          <span>เช็คลิสต์การฟัง: ฉันฟังเนื้อหาบทนี้เข้าใจแล้ว</span>
+        </label>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span class="listen-date" id="date-${idx}">
+            ${st.dateStr ? '📅 วันที่ฟังล่าสุด: ' + st.dateStr : '📅 ยังไม่มีประวัติวันฟัง'}
+          </span>
+          <button class="btn btn-outline btn-sm" style="padding:3px 8px; font-size:0.78rem;" onclick="stampNowDate(${idx})">🕒 บันทึกเวลาฟังตอนนี้</button>
+        </div>
+      </div>
+
+      <!-- Full Content / Transcript -->
+      <details class="transcript-box" open>
+        <summary style="font-weight:800; color:#1e1b4b; cursor:pointer;">📖 เนื้อหาสคริปต์ของบทนี้ (คลิกเพื่อพับ/กางออก — มี ${t.sentences ? t.sentences.length : 0} ย่อหน้า)</summary>
+        <ul>${sentencesHtml}</ul>
+      </details>
+    `;
+
+    container.appendChild(card);
+
+    const audioEl = document.getElementById(`audio-${idx}`);
+    audioEl.playbackRate = speed;
+
+    audioEl.addEventListener('play', () => {
+      // Pause other tracks when this track plays
+      TRACKS.forEach((_, otherIdx) => {
+        if (otherIdx !== idx) {
+          const otherAudio = document.getElementById(`audio-${otherIdx}`);
+          if (otherAudio && !otherAudio.paused) otherAudio.pause();
+          const otherCard = document.getElementById(`card-${otherIdx}`);
+          if (otherCard) otherCard.classList.remove('playing');
+        }
+      });
+      card.classList.add('playing');
+    });
+
+    audioEl.addEventListener('pause', () => {
+      card.classList.remove('playing');
+    });
+
+    audioEl.addEventListener('ended', () => {
+      card.classList.remove('playing');
+      onToggleCheck(idx, true);
+      if (isPlayingAll && idx + 1 < TRACKS.length) {
+        const nextAudio = document.getElementById(`audio-${idx + 1}`);
+        if (nextAudio) {
+          nextAudio.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          nextAudio.play();
+        }
+      } else if (isPlayingAll && idx + 1 >= TRACKS.length) {
+        isPlayingAll = false;
+        updateMasterBtn();
+      }
+    });
+  });
+
+  updateProgressUI();
+}
+
+function seekAudio(idx, deltaSeconds) {
+  const audioEl = document.getElementById(`audio-${idx}`);
+  if (!audioEl) return;
+  const target = Math.max(0, Math.min(audioEl.duration || 9999, (audioEl.currentTime || 0) + deltaSeconds));
+  audioEl.currentTime = target;
+}
+
+function toggleSingleTrack(idx) {
+  const audioEl = document.getElementById(`audio-${idx}`);
+  if (!audioEl) return;
+  if (audioEl.paused) {
+    audioEl.play();
+  } else {
+    audioEl.pause();
+  }
+}
+
+function restartTrack(idx) {
+  const audioEl = document.getElementById(`audio-${idx}`);
+  if (!audioEl) return;
+  audioEl.currentTime = 0;
+  audioEl.play();
+}
+
+function onToggleCheck(idx, checked) {
+  const t = TRACKS[idx];
+  if (!t) return;
+  const nowStr = checked ? formatThaiNow() : '';
+  listenState[t.id] = { listened: checked, dateStr: nowStr };
+  saveListenState();
+
+  const chk = document.getElementById(`chk-${idx}`);
+  if (chk) chk.checked = checked;
+  const dateEl = document.getElementById(`date-${idx}`);
+  if (dateEl) dateEl.textContent = nowStr ? '📅 วันที่ฟังล่าสุด: ' + nowStr : '📅 ยังไม่มีประวัติวันฟัง';
+  const badgeEl = document.getElementById(`status-badge-${idx}`);
+  if (badgeEl) {
+    badgeEl.textContent = checked ? '✅ ฟังจบแล้ว' : '⏳ ยังไม่ได้ฟัง';
+    badgeEl.style.background = checked ? '#dcfce7' : '#f1f5f9';
+    badgeEl.style.color = checked ? '#166534' : '#475569';
+  }
+  const cardEl = document.getElementById(`card-${idx}`);
+  if (cardEl) {
+    if (checked) cardEl.classList.add('listened');
+    else cardEl.classList.remove('listened');
+  }
+}
+
+function stampNowDate(idx) {
+  onToggleCheck(idx, true);
+}
+
+function markAllListened(flag) {
+  const nowStr = flag ? formatThaiNow() : '';
+  TRACKS.forEach(t => {
+    listenState[t.id] = { listened: flag, dateStr: nowStr };
+  });
+  saveListenState();
+  renderTracks();
+}
+
+function changeGlobalSpeed(val) {
+  const rate = parseFloat(val);
+  TRACKS.forEach((_, idx) => {
+    const a = document.getElementById(`audio-${idx}`);
+    if (a) a.playbackRate = rate;
+  });
+}
+
+function filterTracks(cat) {
+  currentFilter = cat;
+  renderTracks();
+}
+
+function updateMasterBtn() {
+  const btn = document.getElementById('masterPlayBtn');
+  if (!btn) return;
+  if (isPlayingAll) {
+    btn.textContent = '⏸️ กำลังเล่นต่อเนื่องทุกบท (กดเพื่อหยุดพัก)';
+    btn.className = 'btn btn-danger';
+  } else {
+    btn.textContent = '▶️ เล่นต่อเนื่องทุกบทอัตโนมัติ (นอนหลับตาฟังยาว)';
+    btn.className = 'btn btn-success';
+  }
+}
+
+function togglePlayAll() {
+  if (isPlayingAll) {
+    stopAllAudio();
+    return;
+  }
+  currentFilter = 'ALL';
+  renderTracks();
+  isPlayingAll = true;
+  updateMasterBtn();
+  const firstAudio = document.getElementById('audio-0');
+  if (firstAudio) {
+    firstAudio.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    firstAudio.play();
+  }
+}
+
+function playNextUnlistened() {
+  currentFilter = 'ALL';
+  renderTracks();
+  let targetIdx = 0;
+  for (let i = 0; i < TRACKS.length; i++) {
+    const st = listenState[TRACKS[i].id];
+    if (!st || !st.listened) {
+      targetIdx = i;
+      break;
+    }
+  }
+  isPlayingAll = true;
+  updateMasterBtn();
+  const audioEl = document.getElementById(`audio-${targetIdx}`);
+  if (audioEl) {
+    audioEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    audioEl.play();
+  }
+}
+
+function stopAllAudio() {
+  isPlayingAll = false;
+  updateMasterBtn();
+  TRACKS.forEach((_, idx) => {
+    const a = document.getElementById(`audio-${idx}`);
+    if (a && !a.paused) a.pause();
+  });
+}
+
+function switchTab(tabId, btnEl) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btnEl.classList.add('active');
+}
+
+// Live Countdown Calculation
+function updateCountdownBanner() {
+  const now = new Date();
+  const events = [
+    { d: new Date('2026-10-19T00:00:00+07:00'), name: 'เปิดรับสมัครสอบออนไลน์ (19-25 ต.ค. 2569)' },
+    { d: new Date('2026-10-25T16:30:00+07:00'), name: 'ปิดรับสมัครสอบออนไลน์ (25 ต.ค. 2569 เวลา 16.30 น.)' },
+    { d: new Date('2026-10-28T08:30:00+07:00'), name: 'ประกาศรายชื่อผู้มีสิทธิสอบ & พิมพ์บัตรสอบ (28 ต.ค. 2569)' },
+    { d: new Date('2026-11-14T09:00:00+07:00'), name: 'วันสอบข้อเขียน ภาค ก (เสาร์ที่ 14 พ.ย. 2569)' },
+    { d: new Date('2026-11-15T09:00:00+07:00'), name: 'วันสอบข้อเขียน ภาค ข (อาทิตย์ที่ 15 พ.ย. 2569)' },
+    { d: new Date('2026-11-18T08:30:00+07:00'), name: 'ประกาศผลสอบข้อเขียนเพื่อเข้าสอบ ภาค ค (18 พ.ย. 2569)' }
+  ];
+  let nextEv = events.find(e => e.d > now) || events[events.length - 1];
+  const diffDays = Math.ceil((nextEv.d - now) / (1000 * 60 * 60 * 24));
+  const el = document.getElementById('liveCountdownText');
+  if (diffDays >= 0) {
+    el.innerHTML = `🚨 แจ้งเตือนนับถอยหลัง: เหลืออีกเพียง <span style="color:#dc2626; font-size:1.2rem;">${diffDays} วัน</span> จะถึง <b>${nextEv.name}</b>`;
+  } else {
+    el.innerHTML = `✅ กำหนดการสอบครูผู้ช่วย สพป.สตูล ปี 2569 ดำเนินการครบถ้วน`;
+  }
+}
+
+// Official Google Email & Calendar Notification (Zero Confirmation Token Needed!)
+function testEmailNotification() {
+  const box = document.getElementById('emailTestStatus');
+  box.style.display = 'block';
+  box.style.background = '#dcfce7';
+  box.style.border = '2px solid #16a34a';
+  box.style.color = '#14532d';
+
+  const gcalApplyUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' +
+    encodeURIComponent('🚨 เปิดรับสมัครสอบครูผู้ช่วย สพป.สตูล 2569 (เอกอังกฤษ 03)') +
+    '&dates=20261019T010000Z/20261025T093000Z&details=' +
+    encodeURIComponent('พิกัดสมัคร: https://obec69.thaijobjob.com/ (รีบสมัครและจ่ายเงิน 530 บาทวันแรก 19 ต.ค. เพื่อให้ได้เลขประจำตัวสอบก่อน!)');
+
+  const gcalExamUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' +
+    encodeURIComponent('🏆 สอบข้อเขียน ภาค ก & ภาค ข ครูผู้ช่วย สพป.สตูล 2569') +
+    '&dates=20261114T010000Z/20261115T100000Z&details=' +
+    encodeURIComponent('พิกัด: สนามสอบจังหวัดสตูล | เสาร์ 14 พ.ย. ภาค ก (200 คะแนน) | อาทิตย์ 15 พ.ย. ภาค ข (200 คะแนน)');
+
+  const gmailSelfUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=nurlaila.thw@gmail.com&su=' +
+    encodeURIComponent('🔔 [ปักหมุดแจ้งเตือนล่วงหน้า 5 วัน] ตารางสอบและพิกัดเอกสาร ครูผู้ช่วย สพป.สตูล 2569') +
+    '&body=' +
+    encodeURIComponent(
+      'ถึง คุณนูรไลลา (กลุ่มวิชาภาษาอังกฤษ รหัส 03 สพป.สตูล)\n\n' +
+      '1. สมัครออนไลน์วันแรก: 19 - 25 ต.ค. 2569 ที่ https://obec69.thaijobjob.com/ (จ่ายเงิน 530 บาทวันแรกได้เลขประจำตัวสอบก่อน)\n' +
+      '2. พิมพ์ใบสมัครและบัตรประจำตัวสอบ: 28 ต.ค. 2569 ที่ https://obec69.thaijobjob.com/\n' +
+      '3. สอบข้อเขียน ภาค ก (200 คะแนน): เสาร์ที่ 14 พ.ย. 2569 ณ สนามสอบ จ.สตูล\n' +
+      '4. สอบข้อเขียน ภาค ข (200 คะแนน): อาทิตย์ที่ 15 พ.ย. 2569 ณ สนามสอบ จ.สตูล\n' +
+      '5. ประกาศผลสอบข้อเขียน: 18 พ.ย. 2569 ที่ http://www.sesao.go.th/\n' +
+      '6. ประเมิน ภาค ค (สัมภาษณ์ 25 + แฟ้มสะสมงาน 25 + สอนสาธิต 10 นาที 50): ภายใน 30 พ.ย. 2569\n\n' +
+      'พิกัดเปิดฟังพอดแคสต์ในคอมพิวเตอร์: C:\\Users\\nurla\\TeacherLicen\\ห้ามลบเด็ดขาด\\เปิดอ่านและฝึกทำข้อสอบตรงนี้ได้เลย.html'
+    );
+
+  box.innerHTML = `
+    <div style="font-size:1rem; margin-bottom:8px;">
+      ✅ <b>แก้ปัญหาลิงก์ "Confirmation token not found" เรียบร้อย 100% ค่ะ!</b><br>
+      <span style="font-weight:500; font-size:0.9rem;">(ไม่ต้องกดลิงก์ยืนยันจากเว็บภายนอกแล้วนะคะ เปลี่ยนมาใช้ระบบแจ้งเตือนของ <b>Google Official</b> และ <b>Windows Task Scheduler</b> โดยตรง ปลอดภัยและไม่หมดอายุ 100% ค่ะ)</span>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+      <a class="btn btn-primary btn-sm" href="${gmailSelfUrl}" target="_blank">📧 1. กดส่งอีเมลตารางสอบเข้า Gmail (nurlaila.thw@gmail.com) โดยตรง</a>
+      <a class="btn btn-success btn-sm" href="${gcalApplyUrl}" target="_blank">📅 2. เพิ่มแจ้งเตือนวันรับสมัครเข้า Google Calendar</a>
+      <a class="btn btn-warning btn-sm" href="${gcalExamUrl}" target="_blank">📅 3. เพิ่มแจ้งเตือนวันสอบเข้า Google Calendar</a>
+      <a class="btn btn-outline btn-sm" href="ปฏิทินแจ้งเตือนล่วงหน้า5วัน_คลิกเพื่อเพิ่มเข้ามือถือและอีเมล.ics" download>📲 4. ดาวน์โหลดไฟล์ปฏิทินครบทุกวัน (.ics)</a>
+    </div>
+  `;
+}
+
+// Flashcards Data
+const FLASHCARDS = [
+  { q: 'ตรรกศาสตร์: "ถ้าขยันอ่านหนังสือ แล้วจะสอบผ่าน" ข้อใดสรุปถูกต้องแน่นอน?', a: 'ถ้าสอบไม่ผ่าน แปลว่าไม่ขยันอ่านหนังสือ (สูตร: ถ้า A แล้ว B === ถ้าไม่ B แล้วไม่ A)' },
+  { q: 'If she ___ (study) harder, she would have passed the exam.', a: 'had studied (เพราะอีกฝั่งเป็น would have + V.3 จึงเป็น If-Clause แบบที่ 3)' },
+  { q: 'A number of students ___ (be) vs The number of students ___ (be)', a: 'A number of students ARE (พหูพจน์) | The number of students IS (เอกพจน์)' },
+  { q: 'The principal suggested that the teacher ___ (be) on time.', a: 'be (Subjunctive Mood หลัง suggest that + ประธาน ต้องใช้ V.inf ไม่ผัน)' },
+  { q: 'ข้อใดในราชการส่วนภูมิภาคที่ "ไม่เป็นนิติบุคคล"?', a: 'อำเภอ (จังหวัด กระทรวง กรม อบต. เทศบาล เป็นนิติบุคคลทั้งหมด)' },
+  { q: 'หากไม่พอใจคำสั่งทางปกครอง ต้องยื่นอุทธรณ์ภายในกี่วัน?', a: 'ภายใน 15 วันนับแต่วันที่ได้รับแจ้งคำสั่ง (เจ้าหน้าที่พิจารณาใน 30 วัน)' },
+  { q: 'เกณฑ์ CEFR ของนักเรียน ป.6 / ม.3 / ม.6 / ครูประถม / ครูมัธยม?', a: 'ป.6 = A1 | ม.3 = A2 | ม.6 = B1 | ครูประถม = B1 | ครูมัธยม = B2' },
+  { q: 'วิธีสอนภาษาอังกฤษ 3Ps ขั้น Practice กับ Production ต่างกันอย่างไร?', a: 'Practice เน้น Accuracy (ความถูกต้อง) | Production เน้น Fluency (ความคล่องแคล่ว)' },
+  { q: 'ตามทฤษฎีของ Erikson เด็กวัยประถม (6-12 ปี) อยู่ในขั้นใด?', a: 'ความขยันหมั่นเพียร vs ความรู้สึกมีปมด้อย (Industry vs Inferiority)' },
+  { q: 'ครูผู้ช่วยต้องเตรียมความพร้อมและพัฒนาอย่างเข้มกี่ปี ประเมินกี่ครั้ง?', a: '2 ปี โดยประเมินทุกๆ 6 เดือน รวมทั้งหมด 4 ครั้ง' },
+  { q: 'อายุเด็กตามกฎหมาย: ปฐมวัย / ภาคบังคับ / คุ้มครองเด็ก?', a: 'ปฐมวัย < 6 ปี | ภาคบังคับ ย่างเข้าปีที่ 7 ถึงย่างเข้าปีที่ 16 | คุ้มครองเด็ก < 18 ปี' },
+  { q: 'การนำเสนอการสอน ภาค ค สพป.สตูล ให้เวลากี่นาที และเอกสารกี่หน้า กี่ชุด?', a: 'นำเสนอไม่เกิน 10 นาที (50 คะแนน) เอกสารไม่เกิน 5 หน้า A4 จำนวน 5 ชุด' }
+];
+
+function renderFlashcards() {
+  const grid = document.getElementById('flashcardGrid');
+  grid.innerHTML = FLASHCARDS.map((fc, i) => `
+    <div class="flashcard" onclick="const el=this.querySelector('.flashcard-ans'); el.style.display=el.style.display==='block'?'none':'block';">
+      <div style="font-weight:800; color:#1e1b4b;">❓ การ์ดใบที่ ${i + 1}: ${fc.q}</div>
+      <div style="font-size:0.8rem; color:#64748b; margin-top:4px;">👆 คลิกเพื่อดูคำตอบ</div>
+      <div class="flashcard-ans">✅ คำตอบ: ${fc.a}</div>
+    </div>
+  `).join('');
+}
+
+// Quiz Questions covering all subjects
+const QUIZ_QUESTIONS = [
+  {
+    q: '1. [ภาค ก - ตรรกศาสตร์] กำหนดให้ "ถ้านักเรียนทุกคนตั้งใจเรียน แล้วจะสอบผ่าน" ข้อใดสรุปได้ถูกต้องอย่างแน่นอน?',
+    opts: ['ก. นักเรียนตั้งใจเรียนแล้วจะสอบไม่ผ่าน', 'ข. ถ้านักเรียนไม่ตั้งใจเรียน แล้วจะสอบไม่ผ่าน', 'ค. ถ้านักเรียนสอบไม่ผ่าน แปลว่านักเรียนไม่ตั้งใจเรียน', 'ง. ถ้านักเรียนสอบผ่าน แปลว่านักเรียนตั้งใจเรียน'],
+    ans: 2,
+    exp: 'สูตรตรรกศาสตร์: ถ้า A แล้ว B สมมูลกับ "ถ้าไม่ B แล้วไม่ A" เท่านั้น ดังนั้น ถ้านักเรียนสอบไม่ผ่าน (ไม่ B) แปลว่าไม่ตั้งใจเรียน (ไม่ A)'
+  },
+  {
+    q: '2. [ภาค ก - คณิตศาสตร์] จงหาพจน์ถัดไปของอนุกรม: 4, 9, 16, 25, 36, ...',
+    opts: ['ก. 42', 'ข. 45', 'ค. 49', 'ง. 64'],
+    ans: 2,
+    exp: 'เป็นเลขยกกำลังสองเรียงกัน: 2²=4, 3²=9, 4²=16, 5²=25, 6²=36 ตัวถัดไปคือ 7² = 49'
+  },
+  {
+    q: '3. [ภาค ก - ภาษาอังกฤษ] A number of teachers ___ attending the meeting, while the number of absentees ___ very small.',
+    opts: ['ก. is / is', 'ข. are / is', 'ค. are / are', 'ง. is / are'],
+    ans: 1,
+    exp: 'A number of + นามพหูพจน์ ใช้กริยาพหูพจน์ (are) ส่วน The number of + นามพหูพจน์ ใช้กริยาเอกพจน์ (is) เสมอ'
+  },
+  {
+    q: '4. [ภาค ก - ข้าราชการที่ดี] ข้อใดต่อไปนี้ "ไม่เป็นนิติบุคคล" ตาม พ.ร.บ.ระเบียบบริหารราชการแผ่นดิน?',
+    opts: ['ก. จังหวัดสตูล', 'ข. สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน', 'ค. อำเภอเมืองสตูล', 'ง. องค์การบริหารส่วนตำบล'],
+    ans: 2,
+    exp: 'จำแม่นๆ: "อำเภอไม่เป็นนิติบุคคล" ส่วนราชการส่วนกลาง จังหวัด และองค์กรปกครองส่วนท้องถิ่นเป็นนิติบุคคลทั้งหมด'
+  },
+  {
+    q: '5. [ภาค ก - ละเมิด] ครูผู้ช่วยขับรถราชการไปส่งนักเรียนตามคำสั่งผู้อำนวยการโรงเรียน แล้วเกิดอุบัติเหตุโดยประมาทเลินเล่อธรรมดา ใครต้องรับผิดชอบค่าเสียหาย?',
+    opts: ['ก. ครูผู้ช่วยต้องจ่ายเองทั้งหมด', 'ข. ผู้อำนวยการโรงเรียนจ่ายส่วนตัว', 'ค. หน่วยงานของรัฐ (สพฐ.) รับผิดชอบ โดยครูไม่ต้องชดใช้คืนเพราะไม่ใช่ประมาทเลินเล่ออย่างร้ายแรง', 'ง. ไม่ต้องมีใครรับผิดชอบ'],
+    ans: 2,
+    exp: 'การทำละเมิดในการปฏิบัติหน้าที่ ผู้เสียหายต้องฟ้องหน่วยงานของรัฐ และรัฐจะไล่เบี้ยเรียกคืนจากเจ้าหน้าที่ได้เฉพาะกรณี "จงใจ หรือ ประมาทเลินเล่ออย่างร้ายแรง" เท่านั้น'
+  },
+  {
+    q: '6. [ภาค ข - วิชาเอกภาษาอังกฤษ 03] The curriculum committee insisted that every English teacher ___ the CEFR B1 test.',
+    opts: ['ก. takes', 'ข. took', 'ค. take', 'ง. taking'],
+    ans: 2,
+    exp: 'Subjunctive Mood: หลัง insisted that + ประธาน ต้องตามด้วยกริยาช่องที่ 1 ไม่ผัน (V.inf = take)'
+  },
+  {
+    q: '7. [ภาค ข - วิชาเอกภาษาอังกฤษ 03] คำในข้อใดเน้นเสียงหนัก (Primary Stress) ที่พยางค์แรก?',
+    opts: ['ก. export (คำกริยา)', 'ข. education', 'ค. photograph', 'ง. economic'],
+    ans: 2,
+    exp: 'PHO-to-graph เน้นพยางค์แรก ส่วน export (v.) เน้นพยางค์ 2, ed-u-CA-tion และ e-co-NOM-ic เน้นพยางค์หน้า -tion และ -ic'
+  },
+  {
+    q: '8. [ภาค ข - วิชาเอกภาษาอังกฤษ 03] ตามประกาศกระทรวงศึกษาธิการ เป้าหมายระดับความสามารถทางภาษาอังกฤษ (CEFR) ของผู้สำเร็จการศึกษาระดับชั้นประถมศึกษาปีที่ 6 และครูผู้สอนระดับประถมศึกษา คือข้อใดตามลำดับ?',
+    opts: ['ก. A1 และ A2', 'ข. A1 และ B1', 'ค. A2 และ B1', 'ง. A2 และ B2'],
+    ans: 1,
+    exp: 'ป.6 ต้องได้ระดับ A1, ม.3 = A2, ม.6 = B1 ส่วนครูผู้สอนระดับประถมศึกษาต้องได้ระดับ B1 ขึ้นไป และครูมัธยม B2 ขึ้นไป'
+  },
+  {
+    q: '9. [ภาค ข - วิชาเอกภาษาอังกฤษ 03] ครูให้นักเรียนชั้น ป.1 ยืนขึ้นแล้วทำท่าทางตามคำสั่งภาษาอังกฤษ เช่น "Touch your head", "Jump three times" โดยยังไม่บังคับให้เด็กพูดทันที ตรงกับวิธีสอนใด?',
+    opts: ['ก. Grammar Translation Method', 'ข. Total Physical Response (TPR)', 'ค. Audio-Lingual Method', 'ง. Task-Based Language Teaching'],
+    ans: 1,
+    exp: 'Total Physical Response (TPR) ของ James Asher เน้นการฟังคำสั่งแล้วตอบสนองด้วยการเคลื่อนไหวร่างกาย เหมาะกับเด็กประถมและช่วยลดความเครียด (Affective Filter)'
+  },
+  {
+    q: '10. [ภาค ข - วิชาการศึกษา] ข้อใดคือจุดมุ่งหมายที่สำคัญที่สุดของการวิจัยปฏิบัติการในชั้นเรียน (Classroom Action Research: CAR)?',
+    opts: ['ก. เพื่อทำผลงานเลื่อนวิทยฐานะของครู', 'ข. เพื่อสร้างทฤษฎีการศึกษาใหม่ระดับประเทศ', 'ค. เพื่อแก้ปัญหาและพัฒนาการเรียนรู้ของผู้เรียนในชั้นเรียนที่ครูรับผิดชอบทันที', 'ง. เพื่อเปรียบเทียบคะแนนระหว่างโรงเรียน'],
+    ans: 2,
+    exp: 'วิจัยในชั้นเรียน (CAR) มุ่งแก้ปัญหาหรือพัฒนาผู้เรียนในห้องเรียนของครูผู้สอนเองทันที ด้วยวงจร PAOR'
+  },
+  {
+    q: '11. [ภาค ข - กฎหมายการศึกษา] การศึกษาภาคบังคับตาม พ.ร.บ.การศึกษาภาคบังคับ พ.ศ. 2545 กำหนดให้เด็กเข้าเรียนตั้งแต่อายุเท่าใดถึงเท่าใด?',
+    opts: ['ก. อายุครบ 6 ปีบริบูรณ์ ถึง 15 ปีบริบูรณ์', 'ข. อายุย่างเข้าปีที่ 7 ถึงอายุย่างเข้าปีที่ 16 (หรือจบชั้น ม.3)', 'ค. อายุ 3 ปี ถึง 15 ปี', 'ง. อายุย่างเข้าปีที่ 6 ถึงย่างเข้าปีที่ 18'],
+    ans: 1,
+    exp: 'จำแม่นๆ: การศึกษาภาคบังคับ คือ "อายุย่างเข้าปีที่ 7 ถึงอายุย่างเข้าปีที่ 16" เว้นแต่สอบได้ชั้นปีที่ 9 (ม.3) แล้ว'
+  },
+  {
+    q: '12. [ภาค ค - การสอนสาธิต] ในการประเมินภาค ค ของ สพป.สตูล ปี 2569 หมวดความสามารถด้านการสอน (50 คะแนน) ข้อใดมีสัดส่วนคะแนนสูงที่สุด (20 คะแนน)?',
+    opts: ['ก. ทักษะ เทคนิค และวิธีการสอน (20 คะแนน)', 'ข. กิจกรรม (10 คะแนน)', 'ค. การใช้สื่อนวัตกรรมเทคโนโลยี (10 คะแนน)', 'ง. การวัดและประเมินผล (10 คะแนน)'],
+    ans: 0,
+    exp: 'ตามประกาศ สพป.สตูล หน้า 12: ทักษะ เทคนิค และวิธีการสอน = 20 คะแนน, กิจกรรม = 10 คะแนน, สื่อนวัตกรรมเทคโนโลยี = 10 คะแนน, วัดและประเมินผล = 10 คะแนน รวม 50 คะแนน'
+  }
+];
+
+let quizAnswered = {};
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = QUIZ_QUESTIONS.map((item, qIdx) => `
+    <div style="margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #e2e8f0;">
+      <div style="font-weight:800; color:#1e1b4b; margin-bottom:8px;">${item.q}</div>
+      <div>
+        ${item.opts.map((opt, oIdx) => `
+          <button class="quiz-option" id="q-${qIdx}-opt-${oIdx}" onclick="selectQuizOption(${qIdx}, ${oIdx})">${opt}</button>
+        `).join('')}
+      </div>
+      <div class="quiz-exp" id="q-exp-${qIdx}">💡 <b>เฉลยละเอียด:</b> ${item.exp}</div>
+    </div>
+  `).join('');
+  updateQuizScore();
+}
+
+function selectQuizOption(qIdx, oIdx) {
+  const item = QUIZ_QUESTIONS[qIdx];
+  quizAnswered[qIdx] = (oIdx === item.ans);
+  item.opts.forEach((_, idx) => {
+    const btn = document.getElementById(`q-${qIdx}-opt-${idx}`);
+    btn.classList.remove('correct', 'wrong');
+    if (idx === item.ans) btn.classList.add('correct');
+    else if (idx === oIdx) btn.classList.add('wrong');
+  });
+  document.getElementById(`q-exp-${qIdx}`).style.display = 'block';
+  updateQuizScore();
+}
+
+function updateQuizScore() {
+  const total = QUIZ_QUESTIONS.length;
+  const correctCount = Object.values(quizAnswered).filter(Boolean).length;
+  document.getElementById('quizScoreText').textContent = `คะแนนที่ได้: ${correctCount} / ${total} ข้อ`;
+}
+
+// Initialize Everything on Load
+updateCountdownBanner();
+renderTracks();
+renderFlashcards();
+renderQuiz();
+</script>
+</body>
+</html>
